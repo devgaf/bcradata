@@ -22,7 +22,12 @@ Este proyecto estara realizandose por etapas:
             3. DER
             4. Entidades
             5. Relaciones
-    - Etapa 3 Integracion con Spring Security:
+    - Etapa 3 Pruebas Unitarias:
+        - En esta etapa se desarollara lo siguiente:
+            1. Pruebas unitarias de los servicios
+            2. Pruebas unitarias de los repositorios
+            3. Pruebas unitarias de los controladores
+    - Etapa 4 Integracion con Spring Security:
         - En esta etapa se desarollara lo siguiente:
             1. Configuracion de Spring Security
             2. Configuracion de JWT
