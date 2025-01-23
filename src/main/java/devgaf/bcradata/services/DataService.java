@@ -9,6 +9,7 @@ import devgaf.bcradata.services.thirdparty.BcraService;
 import devgaf.bcradata.services.thirdparty.DolarServce;
 import devgaf.bcradata.exceptions.SSLConfigurationException;
 import devgaf.bcradata.models.Dolar;
+import devgaf.bcradata.models.Icl;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -17,19 +18,23 @@ public class DataService {
     private final BcraService bcraService;
     private final DolarServce dolarService;
 
-    public String getResponseBcraIclFromDate(String dateIni, String dateEnd) throws SSLConfigurationException {
+    public List<Icl> getResponseBcraIclFromDate(String dateIni, String dateEnd) throws SSLConfigurationException, IOException {
         try {
             return bcraService.getResponseBcraIclFromDate(dateIni, dateEnd);
         } catch (SSLConfigurationException e) {
             throw new SSLConfigurationException("Error de configuración SSL: " + e.getMessage(), e);
+        } catch (IOException e) {
+            throw new IOException("Error parsing JSON response: " + e.getMessage(), e);
         }
     }
 
-    public String getResponseBcraIcl() throws SSLConfigurationException {
+    public List<Icl> getResponseBcraIcl() throws SSLConfigurationException, IOException {
         try {
             return bcraService.getResponseBcraIcl();
         } catch (SSLConfigurationException e) {
             throw new SSLConfigurationException("Error de configuración SSL: " + e.getMessage(), e);
+        } catch (IOException e) {
+            throw new IOException("Error parsing JSON response: " + e.getMessage(), e);
         }
     }
 
