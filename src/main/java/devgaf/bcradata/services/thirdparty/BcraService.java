@@ -29,9 +29,7 @@ public class BcraService {
 
     @Value("${urlBcraFullRecords}")
     private String urlBcraFullRecords;
-
-    @Value("${urlDolarapi}")
-    private String urlDolarapi;
+    
 
     private final RestTemplate restTemplate;
 
