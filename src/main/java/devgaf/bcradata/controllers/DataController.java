@@ -42,17 +42,21 @@ public class DataController {
             List<Icl> data = dataService.getResponseBcraIclFromDate(dateIni, dateEnd);
             return new ResponseEntity<>(new ApiResponse<>(HttpStatus.OK.value(), "Success", data), HttpStatus.OK);
         } catch (SSLConfigurationException e) {
+            e.printStackTrace();
             return new ResponseEntity<>(new ApiResponse<>(HttpStatus.INTERNAL_SERVER_ERROR.value(),
                     "Error de configuración SSL: " + e.getMessage(), null), HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (NoContentException e) {
+            e.printStackTrace();
             return new ResponseEntity<>(
                     new ApiResponse<>(HttpStatus.NO_CONTENT.value(), "No content available: " + e.getMessage(), null),
                     HttpStatus.NO_CONTENT);
         } catch (IOException e) {
+            e.printStackTrace();
             return new ResponseEntity<>(
                     new ApiResponse<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "IO Error: " + e.getMessage(), null),
                     HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (Exception e) {
+            e.printStackTrace();
             return new ResponseEntity<>(
                     new ApiResponse<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Error: " + e.getMessage(), null),
                     HttpStatus.INTERNAL_SERVER_ERROR);
@@ -72,17 +76,21 @@ public class DataController {
             List<Icl> data = dataService.getResponseBcraIcl();
             return new ResponseEntity<>(new ApiResponse<>(HttpStatus.OK.value(), "Success", data), HttpStatus.OK);
         } catch (SSLConfigurationException e) {
+            e.printStackTrace();
             return new ResponseEntity<>(new ApiResponse<>(HttpStatus.INTERNAL_SERVER_ERROR.value(),
                     "Error de configuración SSL: " + e.getMessage(), null), HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (NoContentException e) {
+            e.printStackTrace();
             return new ResponseEntity<>(
                     new ApiResponse<>(HttpStatus.NO_CONTENT.value(), "No content available: " + e.getMessage(), null),
                     HttpStatus.NO_CONTENT);
         } catch (IOException e) {
+            e.printStackTrace();
             return new ResponseEntity<>(
                     new ApiResponse<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "IO Error: " + e.getMessage(), null),
                     HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (Exception e) {
+            e.printStackTrace();
             return new ResponseEntity<>(
                     new ApiResponse<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Error: " + e.getMessage(), null),
                     HttpStatus.INTERNAL_SERVER_ERROR);
@@ -104,13 +112,16 @@ public class DataController {
             List<Dolar> data = dataService.getResponseDolar();
             return new ResponseEntity<>(new ApiResponse<>(HttpStatus.OK.value(), "Success", data), HttpStatus.OK);
         } catch (SSLConfigurationException e) {
+            e.printStackTrace();
             return new ResponseEntity<>(new ApiResponse<>(HttpStatus.INTERNAL_SERVER_ERROR.value(),
                     "Error de configuración SSL: " + e.getMessage(), null), HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (IOException e) {
+            e.printStackTrace();
             return new ResponseEntity<>(
                     new ApiResponse<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "IO Error: " + e.getMessage(), null),
                     HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (Exception e) {
+            e.printStackTrace();
             return new ResponseEntity<>(
                     new ApiResponse<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Error: " + e.getMessage(), null),
                     HttpStatus.INTERNAL_SERVER_ERROR);

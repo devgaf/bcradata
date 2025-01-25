@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import devgaf.bcradata.services.thirdparty.BcraService;
 import devgaf.bcradata.services.thirdparty.DolarServce;
+import devgaf.bcradata.collections.DolarCollection;
+import devgaf.bcradata.collections.IclCollection;
 import devgaf.bcradata.exceptions.SSLConfigurationException;
 import devgaf.bcradata.models.Dolar;
 import devgaf.bcradata.models.Icl;
@@ -17,6 +19,9 @@ import lombok.RequiredArgsConstructor;
 public class DataService {
     private final BcraService bcraService;
     private final DolarServce dolarService;
+
+    private final IclCollection iclCollection = new IclCollection();
+    private final DolarCollection dolarCollection = new DolarCollection();
 
     /**
      * Consulta el BCRA y devuelve una lista del ICL desde una fecha dateIni hasta una fecha dateEnd
@@ -44,7 +49,9 @@ public class DataService {
      */
     public List<Icl> getResponseBcraIcl() throws SSLConfigurationException, IOException {
         try {
-            return bcraService.getResponseBcraIcl();
+            iclCollection.setIclCollectionFromBCRA(bcraService.getResponseBcraIcl());
+            iclCollection.sortIclListByDate();
+            return iclCollection.getIclList();
         } catch (SSLConfigurationException e) {
             throw new SSLConfigurationException("Error de configuración SSL: " + e.getMessage(), e);
         } catch (IOException e) {
@@ -60,6 +67,8 @@ public class DataService {
      * @throws Exception si hay un error general
      */
     public List<Dolar> getResponseDolar() throws SSLConfigurationException, IOException, Exception {
-        return dolarService.getDolarValues();
+        dolarCollection.setDolarCollectionFromDolarApi(dolarService.getDolarValues());
+        dolarCollection.sortDolarListByName();
+        return dolarCollection.getDolarList();
     }
 }

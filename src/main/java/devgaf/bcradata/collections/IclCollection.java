@@ -1,29 +1,15 @@
 package devgaf.bcradata.collections;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import devgaf.bcradata.exceptions.SSLConfigurationException;
 import devgaf.bcradata.models.Icl;
-import devgaf.bcradata.services.DataService;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class IclCollection {
     private List<Icl> iclList= new ArrayList<>();
-    private DataService dataService;
-
-    /**
-     * Setea la coleccion iclList con los datos obtenidos desde el BCRA.
-     * 
-     * @throws SSLConfigurationException si hay un error de configuracion SSL
-     * @throws IOException               si hay un error al obtener los datos del BCRA
-     */
-    public void setIclCollectionFromBCRA() throws SSLConfigurationException, IOException {
-        this.iclList = dataService.getResponseBcraIcl();
-    }
 
     /**
      * Setea la coleccion iclList con la lista de Icl pasada por parametro.
