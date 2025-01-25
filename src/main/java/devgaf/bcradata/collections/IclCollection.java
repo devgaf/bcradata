@@ -15,10 +15,17 @@ public class IclCollection {
     private DataService dataService;
 
     /**
+     * Ordena la lista iclList por la fecha de los Icl. Los mas antiguos primero.
+     */
+    public void sortIclListByDate() {
+        iclList.sort((Icl icl1, Icl icl2) -> icl1.getDate().compareTo(icl2.getDate()));
+    }
+
+    /**
      * Setea la coleccion iclList con los datos obtenidos desde el BCRA.
      * 
      * @throws SSLConfigurationException si hay un error de configuracion SSL
-     * @throws IOException                si hay un error al obtener los datos del BCRA
+     * @throws IOException               si hay un error al obtener los datos del BCRA
      */
     public void setIclCollectionFromBCRA() throws SSLConfigurationException, IOException {
         this.iclList = dataService.getResponseBcraIcl();
@@ -29,15 +36,15 @@ public class IclCollection {
      * 
      * @param iclList lista de Icl a setear en la coleccion
      * @throws SSLConfigurationException si hay un error de configuracion SSL
-     * @throws IOException                si hay un error al obtener los datos del BCRA
+     * @throws IOException               si hay un error al obtener los datos del BCRA
      */
     public void setIclCollectionFromBCRA(List<Icl> iclList) throws SSLConfigurationException, IOException {
         this.iclList = iclList;
     }
 
     /**
-     * Devuelve la lista de Icl que se encuentra en la coleccion. Si no se ha llamado a
-     * setIclCollectionFromBCRA() esta lista estara vacia.
+     * Devuelve la lista de Icl que se encuentra en la coleccion. Si no se ha
+     * llamado a setIclCollectionFromBCRA() esta lista estara vacia.
      * 
      * @return lista de Icl
      */
@@ -49,8 +56,8 @@ public class IclCollection {
      * Devuelve un objeto de tipo Icl que coincida con la fecha pasada por parametro
      * 
      * @param date fecha a buscar en el formato yyyy-MM-dd
-     * @return objeto Icl que coincide con la fecha pasada por parametro o null si no se
-     *         encuentra
+     * @return objeto Icl que coincide con la fecha pasada por parametro o null si
+     *         no se encuentra.
      */
     public Icl getIclByDate(String date) {
         Icl response = null;
