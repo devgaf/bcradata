@@ -18,8 +18,16 @@ public class DataService {
     private final BcraService bcraService;
     private final DolarServce dolarService;
 
+    /**
+     * Consulta el BCRA y devuelve una lista del ICL desde una fecha dateIni hasta una fecha dateEnd
+     * @param dateIni fecha de inicio en formato "dd/MM/yyyy"
+     * @param dateEnd fecha de fin en formato "dd/MM/yyyy"
+     * @return lista de Icl desde dateIni hasta dateEnd
+     * @throws SSLConfigurationException si hay un error en la configuración SSL
+     * @throws IOException si hay un error parseando la respuesta JSON
+     */
     public List<Icl> getResponseBcraIclFromDate(String dateIni, String dateEnd) throws SSLConfigurationException, IOException {
-        try {
+        try{
             return bcraService.getResponseBcraIclFromDate(dateIni, dateEnd);
         } catch (SSLConfigurationException e) {
             throw new SSLConfigurationException("Error de configuración SSL: " + e.getMessage(), e);
@@ -28,6 +36,12 @@ public class DataService {
         }
     }
 
+    /**
+     * Consulta el BCRA y devuelve una lista del ICL historico
+     * @return lista de Icl
+     * @throws SSLConfigurationException si hay un error en la configuración SSL
+     * @throws IOException si hay un error parseando la respuesta JSON
+     */
     public List<Icl> getResponseBcraIcl() throws SSLConfigurationException, IOException {
         try {
             return bcraService.getResponseBcraIcl();
@@ -38,6 +52,13 @@ public class DataService {
         }
     }
 
+    /**
+     * Consulta la API de DolarSi y devuelve una lista de valores de dolares
+     * @return lista de Dolar con los valores de los dolares Oficial, Blue, Bolsa, CCL, Mayorista, Cripto y Tarjeta/Turista
+     * @throws SSLConfigurationException si hay un error en la configuracion SSL
+     * @throws IOException si hay un error parseando la respuesta JSON
+     * @throws Exception si hay un error general
+     */
     public List<Dolar> getResponseDolar() throws SSLConfigurationException, IOException, Exception {
         return dolarService.getDolarValues();
     }

@@ -34,6 +34,14 @@ public class DolarServce {
         this.restTemplate = restTemplate;
     }
 
+/**
+ * Deserializa una respuesta JSON que contiene información sobre el dólar a una lista de objetos Dolar.
+ *
+ * @param response la respuesta JSON en forma de cadena que contiene los datos del dólar.
+ * @return una lista de objetos Dolar con los valores deserializados del JSON.
+ * @throws IOException si ocurre un error al deserializar la respuesta JSON.
+ */
+
     private List<Dolar> dollarSerializer(String response) throws IOException {
         try {
             List<JsonNode> nodes = objectMapper.readValue(response, new TypeReference<List<JsonNode>>() {});
@@ -52,6 +60,14 @@ public class DolarServce {
         }
     }
     
+    /**
+     * Consulta la API de DolarSi y devuelve una lista de valores de dolares
+     * 
+     * @return lista de Dolar con los valores de los dolares Oficial, Blue, Bolsa, CCL, Mayorista, Cripto y Tarjeta/Turista
+     * @throws SSLConfigurationException si hay un error en la configuracion SSL
+     * @throws IOException si hay un error parseando la respuesta JSON
+     * @throws Exception si hay un error general
+     */
     public List<Dolar> getDolarValues() throws IOException, SSLConfigurationException, Exception {
         String url = UriComponentsBuilder.fromUriString(urlDolarapi)
                 .toUriString();

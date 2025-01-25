@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
 import devgaf.bcradata.exceptions.SSLConfigurationException;
 import devgaf.bcradata.models.Icl;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 
 @Service
@@ -45,6 +44,13 @@ public class BcraService {
         this.restTemplate = restTemplate;
     }
 
+    /**
+     * Mapea una respuesta JSON del BCRA a una lista de Icl.
+     * 
+     * @param jsonResponse la respuesta JSON del BCRA
+     * @return una lista de Icl con los datos de la respuesta JSON
+     * @throws IOException si hay un error parseando la respuesta JSON
+     */
     private List<Icl> mapToIclList(String jsonResponse) throws IOException {
         JsonNode rootNode = objectMapper.readTree(jsonResponse);
         JsonNode resultsNode = rootNode.get("results");
@@ -72,6 +78,13 @@ public class BcraService {
         return iclList;
     }
 
+    /**
+     * Consulta el BCRA y devuelve una lista del ICL historico
+     * 
+     * @return lista de Icl
+     * @throws SSLConfigurationException si hay un error en la configuracion SSL
+     * @throws IOException si hay un error parseando la respuesta JSON
+     */
     public List<Icl> getResponseBcraIcl() throws SSLConfigurationException, IOException {
         String url = UriComponentsBuilder.fromUriString(urlBcraFullRecords)
                 .queryParam("limit", "0")
@@ -98,6 +111,15 @@ public class BcraService {
         }
     }
 
+    /**
+     * Consulta el BCRA y devuelve una lista del ICL desde una fecha dateIni hasta una fecha dateEnd
+     * 
+     * @param dateIni fecha de inicio en formato "dd/MM/yyyy"
+     * @param dateEnd fecha de fin en formato "dd/MM/yyyy"
+     * @return lista de Icl desde dateIni hasta dateEnd
+     * @throws SSLConfigurationException si hay un error en la configuracion SSL
+     * @throws IOException si hay un error parseando la respuesta JSON
+     */
     public List<Icl> getResponseBcraIclFromDate(String dateIni, String dateEnd) throws SSLConfigurationException, IOException {
         String url = UriComponentsBuilder.fromUriString(urlBcraFullRecords)
                 .queryParam("limit", "0")

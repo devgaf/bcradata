@@ -15,20 +15,51 @@ import java.security.cert.X509Certificate;
 @Configuration
 public class RestTemplateConfig {
 
+    /**
+     * Devuelve un objeto RestTemplate configurado para que no verifique el
+     * certificado SSL de los sitios web que se consultan. Esto se hace para que 
+     * pueda consumir la API de DolarSi y la API del BCRA, que tienen un certificado 
+     * SSL autofirmado.
+     * 
+     * @return un objeto RestTemplate configurado para no verificar el certificado
+     *         SSL
+     * @throws Exception si hay un error al configurar el objeto RestTemplate
+     */
     @Bean
     public RestTemplate restTemplate() throws Exception {
-        TrustManager[] trustAllCerts = new TrustManager[]{
-            new X509TrustManager() {
-                public X509Certificate[] getAcceptedIssuers() {
-                    return null;
-                }
+        TrustManager[] trustAllCerts = new TrustManager[] {
+                new X509TrustManager() {
+                    /**
+                     * Devuelve un arreglo vacio de X509Certificate que indica los
+                     * certificados que se consideran validos. Esto se hace para que el
+                     * objeto X509TrustManager no lance excepciones al verificar el
+                     * certificado SSL.
+                     *
+                     * @return un arreglo vacio de X509Certificate
+                     */
+                    public X509Certificate[] getAcceptedIssuers() {
+                        return null;
+                    }
 
-                public void checkClientTrusted(X509Certificate[] certs, String authType) {
-                }
+                    /**
+                     * No hace nada. Este mtodo debe ser implementado para que el objeto
+                     * X509TrustManager sea valido, pero no se utiliza en este caso.
+                     *
+                     * @param certs    arreglo de certificados que se estan verificando
+                     * @param authType tipo de autenticacion que se esta realizando
+                     */
+                    public void checkClientTrusted(X509Certificate[] certs, String authType) {
+                    }
 
-                public void checkServerTrusted(X509Certificate[] certs, String authType) {
+                    /**
+                     * No hace nada. Este metodo debe ser implementado para que el objeto
+                     * X509TrustManager sea valido, pero no se utiliza en este caso.
+                     *
+                     * @param authType tipo de autenticacion que se esta realizando
+                     */
+                    public void checkServerTrusted(X509Certificate[] certs, String authType) {
+                    }
                 }
-            }
         };
 
         SSLContext sslContext = SSLContext.getInstance("TLS");

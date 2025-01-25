@@ -25,6 +25,15 @@ import java.io.IOException;
 public class DataController {
     private final DataService dataService;
 
+    /**
+     * Consulta el BCRA y devuelve una lista del ICL desde una fecha dateIni hasta una fecha dateEnd
+     * 
+     * @param dateRange un objeto Map con dos claves: "dateIni" y "dateEnd", que representan la fecha 
+     *                  de inicio y fin de la consulta respectivamente, en formato "dd/MM/yyyy"
+     * @return lista de Icl desde dateIni hasta dateEnd
+     * @throws SSLConfigurationException si hay un error en la configuracion SSL
+     * @throws IOException                si hay un error al obtener los datos del BCRA
+     */
     @PostMapping("/bcra-data-icl-from-date")
     public ResponseEntity<ApiResponse<List<Icl>>> getBcraDataIclFromDate(@RequestBody Map<String, String> dateRange) {
         try {
@@ -50,6 +59,13 @@ public class DataController {
         }
     }
 
+    /**
+     * Consulta el BCRA y devuelve una lista del ICL historico
+     * 
+     * @return lista de Icl
+     * @throws SSLConfigurationException si hay un error en la configuracion SSL
+     * @throws IOException                si hay un error al obtener los datos del BCRA
+     */
     @GetMapping("/bcra-data-icl")
     public ResponseEntity<ApiResponse<List<Icl>>> getBcraDataIcl() {
         try {
@@ -73,6 +89,15 @@ public class DataController {
         }
     }
 
+    /**
+     * Consulta la API de DolarSi y devuelve una lista de valores de dolares
+     * 
+     * @return lista de Dolar con los valores de los dolares Oficial, Blue, Bolsa, CCL, Mayorista, 
+     *          Cripto y Tarjeta/Turista
+     * @throws SSLConfigurationException si hay un error en la configuracion SSL
+     * @throws IOException si hay un error al obtener los datos de DolarSi
+     * @throws Exception si hay un error general
+     */
     @GetMapping("/dolar-data")
     public ResponseEntity<ApiResponse<List<Dolar>>> getDolarData() {
         try {
