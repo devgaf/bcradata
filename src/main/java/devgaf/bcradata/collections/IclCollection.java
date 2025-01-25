@@ -2,6 +2,7 @@ package devgaf.bcradata.collections;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import devgaf.bcradata.exceptions.SSLConfigurationException;
@@ -11,15 +12,8 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class IclCollection {
-    private List<Icl> iclList;
+    private List<Icl> iclList= new ArrayList<>();
     private DataService dataService;
-
-    /**
-     * Ordena la lista iclList por la fecha de los Icl. Los mas antiguos primero.
-     */
-    public void sortIclListByDate() {
-        iclList.sort((Icl icl1, Icl icl2) -> icl1.getDate().compareTo(icl2.getDate()));
-    }
 
     /**
      * Setea la coleccion iclList con los datos obtenidos desde el BCRA.
@@ -35,11 +29,16 @@ public class IclCollection {
      * Setea la coleccion iclList con la lista de Icl pasada por parametro.
      * 
      * @param iclList lista de Icl a setear en la coleccion
-     * @throws SSLConfigurationException si hay un error de configuracion SSL
-     * @throws IOException               si hay un error al obtener los datos del BCRA
      */
-    public void setIclCollectionFromBCRA(List<Icl> iclList) throws SSLConfigurationException, IOException {
+    public void setIclCollectionFromBCRA(List<Icl> iclList) {
         this.iclList = iclList;
+    }
+
+    /**
+     * Ordena la lista iclList por la fecha de los Icl. Los mas antiguos primero.
+     */
+    public void sortIclListByDate() {
+        iclList.sort((Icl icl1, Icl icl2) -> icl1.getDate().compareTo(icl2.getDate()));
     }
 
     /**
