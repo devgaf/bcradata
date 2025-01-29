@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  db-economicdata:
+    image: mysql:8.0.33
+    restart: always
+    container_name: MYSQL_ECONOMICDATA
+    env_file:
+      - .env.local
+    environment:
+      MYSQL_ROOT_PASSWORD: ${PASSWORD_ROOT_MYSQL}
+      MYSQL_DATABASE: ${SPRING_DATASOURCE_DATABASE}
+      MYSQL_USER: ${SPRING_DATASOURCE_USER_NAME_MYSQL}
+      MYSQL_PASSWORD: ${SPRING_DATASOURCE_PASSWORD_MYSQL}
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
