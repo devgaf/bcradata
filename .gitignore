@@ -3,6 +3,7 @@
 
 # Log file
 *.log
+/logs_economic_data/
 
 # BlueJ files
 *.ctxt
