@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import devgaf.bcradata.models.Icl;
+import devgaf.bcradata.dtos.Icl;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor

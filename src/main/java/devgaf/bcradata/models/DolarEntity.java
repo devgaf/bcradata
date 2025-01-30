@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Dolar {
+public class DolarEntity {
     private String name;
     private double purchase;
     private double sale;

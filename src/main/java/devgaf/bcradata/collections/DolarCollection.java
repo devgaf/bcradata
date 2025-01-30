@@ -3,7 +3,7 @@ package devgaf.bcradata.collections;
 import java.util.ArrayList;
 import java.util.List;
 
-import devgaf.bcradata.models.Dolar;
+import devgaf.bcradata.dtos.Dolar;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor

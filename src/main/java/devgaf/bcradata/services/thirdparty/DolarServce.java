@@ -18,7 +18,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.type.TypeReference;
 
 import devgaf.bcradata.exceptions.SSLConfigurationException;
-import devgaf.bcradata.models.Dolar;
+import devgaf.bcradata.dtos.Dolar;
 
 @Service
 public class DolarServce {

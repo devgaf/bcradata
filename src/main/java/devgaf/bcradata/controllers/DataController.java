@@ -4,8 +4,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import devgaf.bcradata.services.DataService;
 import devgaf.bcradata.exceptions.SSLConfigurationException;
-import devgaf.bcradata.models.Dolar;
-import devgaf.bcradata.models.Icl;
+import devgaf.bcradata.dtos.Dolar;
+import devgaf.bcradata.dtos.Icl;
 import devgaf.bcradata.exceptions.NoContentException;
 import lombok.RequiredArgsConstructor;
 

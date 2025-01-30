@@ -10,8 +10,8 @@ import devgaf.bcradata.services.thirdparty.DolarServce;
 import devgaf.bcradata.collections.DolarCollection;
 import devgaf.bcradata.collections.IclCollection;
 import devgaf.bcradata.exceptions.SSLConfigurationException;
-import devgaf.bcradata.models.Dolar;
-import devgaf.bcradata.models.Icl;
+import devgaf.bcradata.dtos.Dolar;
+import devgaf.bcradata.dtos.Icl;
 import lombok.RequiredArgsConstructor;
 
 @Service

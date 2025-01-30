@@ -13,7 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import devgaf.bcradata.exceptions.SSLConfigurationException;
-import devgaf.bcradata.models.Icl;
+import devgaf.bcradata.dtos.Icl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.JsonNode;
 

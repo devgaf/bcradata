@@ -9,9 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Icl {
-    public static final String NAME = "Índice para Contratos de Locación";
-    public static final String ID_VARIABLE = "40";
+
+public class IclEntity {
     private double value;
     private LocalDate date;
 }
