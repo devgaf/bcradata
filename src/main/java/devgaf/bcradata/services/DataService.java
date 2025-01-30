@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import devgaf.bcradata.services.thirdparty.BcraService;
-import devgaf.bcradata.services.thirdparty.DolarServce;
+import devgaf.bcradata.services.thirdparty.DolarService;
 import devgaf.bcradata.collections.DolarCollection;
 import devgaf.bcradata.collections.IclCollection;
 import devgaf.bcradata.dtos.Dolar;
@@ -23,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class DataService {
     private final BcraService bcraService;
-    private final DolarServce dolarService;
+    private final DolarService dolarService;
     private final IclRepository iclRepository;
     private final DolarRepository dolarRepository;
 

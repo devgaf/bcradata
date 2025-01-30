@@ -23,8 +23,8 @@ import devgaf.bcradata.exceptions.SSLConfigurationException;
 import devgaf.bcradata.repositories.DolarRepository;
 
 @Service
-public class DolarServce {
-    private static final Logger logger = LoggerFactory.getLogger(DolarServce.class);
+public class DolarService {
+    private static final Logger logger = LoggerFactory.getLogger(DolarService.class);
 
     @Value("${urlDolarapi}")
     private String urlDolarapi;
@@ -33,7 +33,7 @@ public class DolarServce {
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX");
     private final DolarRepository dolarRepository;
 
-    public DolarServce(RestTemplate restTemplate, DolarRepository dolarRepository) {
+    public DolarService(RestTemplate restTemplate, DolarRepository dolarRepository) {
         this.restTemplate = restTemplate;
         this.dolarRepository = dolarRepository;
     }
