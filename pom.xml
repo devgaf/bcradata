@@ -5,14 +5,14 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.4.1</version>
+		<version>3.4.2</version>
 		<relativePath/>
 		<!-- lookup parent from repository -->
 	</parent>
 	<groupId>devgaf</groupId>
-	<artifactId>bcradata</artifactId>
+	<artifactId>economicdata</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>bcradata</name>
+	<name>economicdata</name>
 	<description>Demo para obtener datos del BCRA</description>
 	<url/>
 	<licenses>
@@ -61,6 +61,16 @@
 			<artifactId>dotenv-java</artifactId>
 			<version>3.0.2</version>
 		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.mysql</groupId>
+			<artifactId>mysql-connector-j</artifactId>
+		</dependency>
+
 	</dependencies>
 	<build>
 		<plugins>
