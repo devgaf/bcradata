@@ -17,8 +17,10 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.type.TypeReference;
 
-import devgaf.bcradata.exceptions.SSLConfigurationException;
 import devgaf.bcradata.dtos.Dolar;
+import devgaf.bcradata.models.DolarEntity;
+import devgaf.bcradata.exceptions.SSLConfigurationException;
+import devgaf.bcradata.repositories.DolarRepository;
 
 @Service
 public class DolarServce {
@@ -29,9 +31,11 @@ public class DolarServce {
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX");
+    private final DolarRepository dolarRepository;
 
-    public DolarServce(RestTemplate restTemplate) {
+    public DolarServce(RestTemplate restTemplate, DolarRepository dolarRepository) {
         this.restTemplate = restTemplate;
+        this.dolarRepository = dolarRepository;
     }
 
 /**
@@ -74,7 +78,9 @@ public class DolarServce {
         try {
             String responseUrl = restTemplate.getForObject(url, String.class);
             if (responseUrl != null) {
-                return dollarSerializer(responseUrl);
+                List<Dolar> dolarList = dollarSerializer(responseUrl);
+                dolarRepository.saveAll(dolarList.stream().map(this::toEntity).collect(Collectors.toList()));
+                return dolarList;
             } else {
                 throw new IOException("Response body is null");
             }
@@ -91,5 +97,14 @@ public class DolarServce {
             ex.printStackTrace();
             throw ex;
         }
+    }
+
+    private DolarEntity toEntity(Dolar dolar) {
+        DolarEntity entity = new DolarEntity();
+        entity.setName(dolar.getName());
+        entity.setPurchase(dolar.getPurchase());
+        entity.setSale(dolar.getSale());
+        entity.setLastUpdated(dolar.getLastUpdated());
+        return entity;
     }
 }

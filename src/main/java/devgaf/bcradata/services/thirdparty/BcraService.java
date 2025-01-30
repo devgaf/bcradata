@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
 import java.time.LocalDate;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -12,8 +13,11 @@ import org.springframework.web.util.UriComponentsBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import devgaf.bcradata.exceptions.SSLConfigurationException;
 import devgaf.bcradata.dtos.Icl;
+import devgaf.bcradata.exceptions.SSLConfigurationException;
+import devgaf.bcradata.repositories.IclRepository;
+import devgaf.bcradata.models.IclEntity;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.JsonNode;
 
@@ -39,9 +43,11 @@ public class BcraService {
 
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper = new ObjectMapper();
+    private final IclRepository iclRepository;
 
-    public BcraService(RestTemplate restTemplate) {
+    public BcraService(RestTemplate restTemplate, IclRepository iclRepository) {
         this.restTemplate = restTemplate;
+        this.iclRepository = iclRepository;
     }
 
     /**
@@ -92,7 +98,9 @@ public class BcraService {
         try {
             String response = restTemplate.getForObject(url, String.class);
             if (response != null) {
-                return mapToIclList(response);
+                List<Icl> iclList = mapToIclList(response);
+                iclRepository.saveAll(iclList.stream().map(this::toEntity).collect(Collectors.toList()));
+                return iclList;
             } else {
                 throw new IOException("Response body is null");
             }
@@ -129,7 +137,9 @@ public class BcraService {
         try {
             String response = restTemplate.getForObject(url, String.class);
             if (response != null) {
-                return mapToIclList(response);
+                List<Icl> iclList = mapToIclList(response);
+                iclRepository.saveAll(iclList.stream().map(this::toEntity).collect(Collectors.toList()));
+                return iclList;
             } else {
                 throw new IOException("Response body is null");
             }
@@ -146,5 +156,12 @@ public class BcraService {
             ex.printStackTrace();
             throw new RuntimeException("Error fetching data from BCRA: " + ex.getMessage(), ex);
         }
+    }
+
+    private IclEntity toEntity(Icl icl) {
+        IclEntity entity = new IclEntity();
+        entity.setDate(icl.getDate());
+        entity.setValue(icl.getValue());
+        return entity;
     }
 }
