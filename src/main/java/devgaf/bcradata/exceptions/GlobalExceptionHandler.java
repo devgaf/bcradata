@@ -10,6 +10,11 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Clase que maneja las excepciones globales de la aplicación
+ * logueo de errores con SLF4J y manejo de excepciones
+ * 
+ */
 @ControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {

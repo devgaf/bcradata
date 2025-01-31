@@ -1,0 +1,10 @@
+devgaf.bcradata
+devgaf.bcradata.collections
+devgaf.bcradata.config
+devgaf.bcradata.controllers
+devgaf.bcradata.dtos
+devgaf.bcradata.exceptions
+devgaf.bcradata.models
+devgaf.bcradata.repositories
+devgaf.bcradata.services
+devgaf.bcradata.services.thirdparty

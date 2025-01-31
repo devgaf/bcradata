@@ -12,6 +12,11 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 import java.security.cert.X509Certificate;
 
+/**
+ * Configura el objeto RestTemplate para que no verifique el certificado SSL de los
+ * sitios web que se consultan. Esto se hace para que pueda consumir la API de
+ * DolarSi y la API del BCRA, que tienen un certificado SSL autofirmado.
+ */
 @Configuration
 public class RestTemplateConfig {
 

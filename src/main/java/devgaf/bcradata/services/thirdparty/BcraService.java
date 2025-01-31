@@ -21,6 +21,9 @@ import devgaf.bcradata.models.IclEntity;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.JsonNode;
 
+/**
+ * Servicio para consultar el BCRA.
+ */
 @Service
 public class BcraService {
     private static final Logger logger = LoggerFactory.getLogger(BcraService.class);

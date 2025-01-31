@@ -22,6 +22,10 @@ import devgaf.bcradata.models.DolarEntity;
 import devgaf.bcradata.exceptions.SSLConfigurationException;
 import devgaf.bcradata.repositories.DolarRepository;
 
+/**
+ * Servicio que se encarga de obtener los valores del dólar de la API de
+ * DolarSi.
+ */
 @Service
 public class DolarService {
     private static final Logger logger = LoggerFactory.getLogger(DolarService.class);
@@ -33,22 +37,28 @@ public class DolarService {
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX");
     private final DolarRepository dolarRepository;
 
+    /**
+     * Constructor de la clase DolarService.
+     * 
+     * @param restTemplate    RestTemplate para realizar las solicitudes HTTP.
+     * @param dolarRepository Repositorio de la entidad DolarEntity.
+     */
     public DolarService(RestTemplate restTemplate, DolarRepository dolarRepository) {
         this.restTemplate = restTemplate;
         this.dolarRepository = dolarRepository;
     }
 
-/**
- * Deserializa una respuesta JSON que contiene información sobre el dólar a una lista de objetos Dolar.
- *
- * @param response la respuesta JSON en forma de cadena que contiene los datos del dólar.
- * @return una lista de objetos Dolar con los valores deserializados del JSON.
- * @throws IOException si ocurre un error al deserializar la respuesta JSON.
- */
-
+    /**
+     * Deserialize the response from DolarSi API into a list of Dolar objects.
+     * 
+     * @param response string containing the response from the API
+     * @return a list of Dolar objects
+     * @throws IOException if there is an error deserializing the response
+     */
     private List<Dolar> dollarSerializer(String response) throws IOException {
         try {
-            List<JsonNode> nodes = objectMapper.readValue(response, new TypeReference<List<JsonNode>>() {});
+            List<JsonNode> nodes = objectMapper.readValue(response, new TypeReference<List<JsonNode>>() {
+            });
             return nodes.stream().map(node -> {
                 Dolar dolar = new Dolar();
                 dolar.setName(node.get("nombre").asText());
@@ -63,14 +73,30 @@ public class DolarService {
             throw new IOException("Error deserializing response from dollarSerializer", e);
         }
     }
-    
+
+    /**
+     * Convierte un objeto Dolar en un objeto DolarEntity.
+     *
+     * @param dolar el objeto Dolar a convertir
+     * @return el objeto DolarEntity con los datos del objeto Dolar
+     */
+    private DolarEntity toEntity(Dolar dolar) {
+        DolarEntity entity = new DolarEntity();
+        entity.setName(dolar.getName());
+        entity.setPurchase(dolar.getPurchase());
+        entity.setSale(dolar.getSale());
+        entity.setLastUpdated(dolar.getLastUpdated());
+        return entity;
+    }
+
     /**
      * Consulta la API de DolarSi y devuelve una lista de valores de dolares
      * 
-     * @return lista de Dolar con los valores de los dolares Oficial, Blue, Bolsa, CCL, Mayorista, Cripto y Tarjeta/Turista
+     * @return lista de Dolar con los valores de los dolares Oficial, Blue, Bolsa,
+     *         CCL, Mayorista, Cripto y Tarjeta/Turista
      * @throws SSLConfigurationException si hay un error en la configuracion SSL
-     * @throws IOException si hay un error parseando la respuesta JSON
-     * @throws Exception si hay un error general
+     * @throws IOException               si hay un error parseando la respuesta JSON
+     * @throws Exception                 si hay un error general
      */
     public List<Dolar> getDolarValues() throws IOException, SSLConfigurationException, Exception {
         String url = UriComponentsBuilder.fromUriString(urlDolarapi)
@@ -97,14 +123,5 @@ public class DolarService {
             ex.printStackTrace();
             throw ex;
         }
-    }
-
-    private DolarEntity toEntity(Dolar dolar) {
-        DolarEntity entity = new DolarEntity();
-        entity.setName(dolar.getName());
-        entity.setPurchase(dolar.getPurchase());
-        entity.setSale(dolar.getSale());
-        entity.setLastUpdated(dolar.getLastUpdated());
-        return entity;
     }
 }

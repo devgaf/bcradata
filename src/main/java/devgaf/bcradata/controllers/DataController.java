@@ -20,6 +20,11 @@ import java.util.List;
 import java.util.Map;
 import java.io.IOException;
 
+/**
+ * Controlador de la API REST
+ * 
+ * @version 1.0
+ */
 @RestController
 @RequiredArgsConstructor
 public class DataController {
@@ -33,13 +38,12 @@ public class DataController {
     /**
      * Consulta el BCRA y devuelve una lista del ICL desde una fecha dateIni hasta una fecha dateEnd
      * 
-     * @param dateRange un objeto Map con claves "dateIni" y "dateEnd" que contienen la fecha de
-     *  inicio y fin en formato "dd/MM/yyyy"
+     * @param dateRange un objeto con dos claves: dateIni y dateEnd, con los valores de
+     *                  las fechas de inicio y fin en formato "dd/MM/yyyy"
      * @return una lista de Icl con los datos del ICL desde dateIni hasta dateEnd
-     * @throws SSLConfigurationException si hay un error en la configuracion SSL
-     * @throws NoContentException si no hay contenido disponible
-     * @throws IOException si hay un error parseando la respuesta JSON
-     * @throws Exception si hay un error general
+     *  retorna staus 500 si hay un error si hay un error en la configuracion SSL,
+     *  si hay un error parseando la respuesta JSON o si hay un error general
+     *  Retorna un staus 204 si no hay contenido disponible
      */
     @PostMapping("/bcra-data-icl-from-date")
     public ResponseEntity<List<Icl>> getBcraDataIclFromDate(@RequestBody Map<String, String> dateRange) {
@@ -70,14 +74,14 @@ public class DataController {
         }
     }
 
+    
     /**
      * Consulta el BCRA y devuelve una lista del ICL historico
      * 
-     * @return una lista de Icl con los datos del ICL historico
-     * @throws SSLConfigurationException si hay un error en la configuracion SSL
-     * @throws NoContentException si no hay contenido disponible
-     * @throws IOException si hay un error parseando la respuesta JSON
-     * @throws Exception si hay un error general
+     * @return lista de Icl con los datos del ICL historico
+     *  retorna staus 500 si hay un error si hay un error en la configuracion SSL,
+     *  si hay un error parseando la respuesta JSON o si hay un error general
+     *  Retorna un staus 204 si no hay contenido disponible
      */
     @GetMapping("/bcra-data-icl")
     public ResponseEntity<List<Icl>> getBcraDataIcl() {
@@ -105,14 +109,13 @@ public class DataController {
                     HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+    
     /**
      * Consulta la API de DolarSi y devuelve una lista de valores de dolares
      * 
      * @return lista de Dolar con los valores de los dolares Oficial, Blue, Bolsa, CCL, Mayorista, Cripto y Tarjeta/Turista
-     * @throws SSLConfigurationException si hay un error en la configuracion SSL
-     * @throws IOException si hay un error parseando la respuesta JSON
-     * @throws Exception si hay un error general
+     *  retorna staus 500 si hay un error si hay un error en la configuracion SSL,
+     *  si hay un error parseando la respuesta JSON o si hay un error general
      */
     @GetMapping("/dolar-data")
     public ResponseEntity<List<Dolar>> getDolarData() {

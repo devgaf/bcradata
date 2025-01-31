@@ -5,6 +5,11 @@ import org.springframework.stereotype.Repository;
 
 import devgaf.bcradata.models.DolarEntity;
 
+/**
+ * Repositorio de la entidad DolarEntity.
+ * 
+ * @version 1.0
+ */
 @Repository
 public interface DolarRepository extends JpaRepository<DolarEntity, Long> {
 }

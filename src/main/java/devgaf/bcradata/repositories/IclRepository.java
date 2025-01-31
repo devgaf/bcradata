@@ -1,9 +1,16 @@
 package devgaf.bcradata.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import devgaf.bcradata.models.IclEntity;
 
+/**
+ * Repositorio de la entidad IclEntity.
+ * 
+ * @version 1.0
+ */
+@Repository
 public interface IclRepository extends JpaRepository<IclEntity, Long> {
 
 }

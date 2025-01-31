@@ -7,6 +7,11 @@ import java.util.List;
 import devgaf.bcradata.dtos.Icl;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Clase que contiene una coleccion de objetos de tipo Icl.
+ * 
+ * @version 1.0
+ */
 @RequiredArgsConstructor
 public class IclCollection {
     private List<Icl> iclList= new ArrayList<>();
