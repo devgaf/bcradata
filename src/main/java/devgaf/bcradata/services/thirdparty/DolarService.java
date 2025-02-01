@@ -48,6 +48,31 @@ public class DolarService {
         this.dolarRepository = dolarRepository;
     }
 
+
+    /**
+     * Guarda un valor de dólar en la base de datos. Si ya existe un registro
+     * con la misma fecha de actualización y el mismo nombre, pero con valores
+     * de compra o venta diferentes, actualiza esos valores en el registro
+     * existente. Si no existe un registro con la misma fecha de actualización,
+     * guarda el nuevo registro.
+     * 
+     * @param dolarEntity la entidad DolarEntity que contiene los valores del 
+     *                    dólar a guardar o actualizar
+     */
+    public void saveDolar(DolarEntity dolarEntity) {
+        DolarEntity existingDolar = dolarRepository.findByLastUpdated(dolarEntity.getLastUpdated());
+        if (existingDolar != null && existingDolar.getLastUpdated().equals(dolarEntity.getLastUpdated()) && Double.compare(existingDolar.getPurchase(), dolarEntity.getPurchase()) != 0 && Double.compare(existingDolar.getSale(), dolarEntity.getSale()) != 0 && existingDolar.getName().equals(dolarEntity.getName())) {
+
+            existingDolar.setPurchase(dolarEntity.getPurchase());
+            existingDolar.setSale(dolarEntity.getSale());
+            dolarRepository.save(existingDolar);
+
+        } else if (existingDolar == null) {
+
+            dolarRepository.save(dolarEntity);
+        }
+    }
+
     /**
      * Deserialize the response from DolarSi API into a list of Dolar objects.
      * 

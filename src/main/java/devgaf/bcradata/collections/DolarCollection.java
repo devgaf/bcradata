@@ -12,6 +12,9 @@ import lombok.RequiredArgsConstructor;
  * @version 1.0
  */
 @RequiredArgsConstructor
+/**
+ * Colección para manejar los datos del dólar.
+ */
 public class DolarCollection {
 
     List<Dolar> dolarList = new ArrayList<>();
@@ -22,7 +25,7 @@ public class DolarCollection {
      * @param dolarList lista de Dolar a setear en la coleccion
      */
     public void setDolarCollectionFromDolarApi(List<Dolar> dolarList) {
-        this.dolarList = dolarList;
+        this.dolarList = new ArrayList<>(dolarList);
     }
 
     /**

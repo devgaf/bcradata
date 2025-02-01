@@ -17,6 +17,9 @@ import lombok.extern.slf4j.Slf4j;
  */
 @ControllerAdvice
 @Slf4j
+/**
+ * Manejador global de excepciones.
+ */
 public class GlobalExceptionHandler {
 
 	

@@ -1,8 +1,8 @@
 package devgaf.bcradata.services;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -36,19 +36,20 @@ public class DataService {
     private final IclCollection iclCollection = new IclCollection();
     private final DolarCollection dolarCollection = new DolarCollection();
 
-   
     /**
-     * Consulta el BCRA y devuelve una lista del ICL desde una fecha dateIni hasta una fecha dateEnd
+     * Consulta el BCRA y devuelve una lista del ICL desde una fecha dateIni hasta
+     * una fecha dateEnd
      * 
      * @param dateIni fecha de inicio en formato "dd/MM/yyyy"
      * @param dateEnd fecha de fin en formato "dd/MM/yyyy"
      * @return lista de Icl desde dateIni hasta dateEnd
      * @throws SSLConfigurationException si hay un error en la configuracion SSL
-     * @throws IOException si hay un error parseando la respuesta JSON
-     * @throws NoContentException si no hay contenido disponible
+     * @throws IOException               si hay un error parseando la respuesta JSON
+     * @throws NoContentException        si no hay contenido disponible
      */
-    public List<Icl> getResponseBcraIclFromDate(String dateIni, String dateEnd) throws SSLConfigurationException, IOException, NoContentException {
-        try{
+    public List<Icl> getResponseBcraIclFromDate(String dateIni, String dateEnd)
+            throws SSLConfigurationException, IOException, NoContentException {
+        try {
             List<Icl> response = bcraService.getResponseBcraIclFromDate(dateIni, dateEnd);
             if (response.isEmpty()) {
                 throw new NoContentException("No content available");
@@ -62,43 +63,61 @@ public class DataService {
     }
 
     /**
-     * Consulta el BCRA y devuelve una lista del ICL historico. Si ya se ha consultado
+     * Consulta el BCRA y devuelve una lista del ICL historico. Si ya se ha
+     * consultado
      * previamente el BCRA, devuelve la lista almacenada en la base de datos.
      * 
      * @return lista de Icl con los datos del ICL historico
      * @throws SSLConfigurationException si hay un error en la configuracion SSL
-     * @throws IOException si hay un error parseando la respuesta JSON
+     * @throws IOException               si hay un error parseando la respuesta JSON
      */
     public List<Icl> getResponseBcraIcl() throws SSLConfigurationException, IOException {
-        iclCollection.setIclCollectionFromBCRA(iclRepository.findAll().stream().map(this::toIclDto).collect(Collectors.toList()));
+        iclCollection.setIclCollectionFromBCRA(iclRepository.findAll().stream().map(this::toIclDto).toList());
         if (iclCollection.getIclList().isEmpty()) {
-            iclCollection.setIclCollectionFromBCRA(bcraService.getResponseBcraIcl());
+            List<Icl> iclList = bcraService.getResponseBcraIcl();
+            iclList.forEach(icl -> bcraService.saveIcl(toIclEntity(icl)));
+            iclCollection.setIclCollectionFromBCRA(iclList);
         }
         iclCollection.sortIclListByDate();
         return iclCollection.getIclList();
     }
-    
-    
+
     /**
-     * Consulta la API de DolarSi y devuelve una lista de valores de dolares. Si ya se ha consultado
+     * Consulta la API de DolarSi y devuelve una lista de valores de dolares. Si ya
+     * se ha consultado
      * previamente la API, devuelve la lista almacenada en la base de datos.
      * 
-     * @return lista de Dolar con los valores de los dolares Oficial, Blue, Bolsa, CCL, Mayorista, Cripto y Tarjeta/Turista
+     * @return lista de Dolar con los valores de los dolares Oficial, Blue, Bolsa,
+     *         CCL, Mayorista, Cripto y Tarjeta/Turista
      * @throws SSLConfigurationException si hay un error en la configuracion SSL
-     * @throws IOException si hay un error parseando la respuesta JSON
-     * @throws Exception si hay un error general
+     * @throws IOException               si hay un error parseando la respuesta JSON
      */
-    public List<Dolar> getResponseDolar() throws SSLConfigurationException, IOException, Exception {
-        dolarCollection.setDolarCollectionFromDolarApi(dolarRepository.findAll().stream().map(this::toDolarDto).collect(Collectors.toList()));
-        if (dolarCollection.getDolarList().isEmpty()) {
-            dolarCollection.setDolarCollectionFromDolarApi(dolarService.getDolarValues());
+    public List<Dolar> getResponseDolar() throws SSLConfigurationException, IOException {
+        try {
+            List<Dolar> dolarList = new ArrayList<>(dolarRepository.findAll().stream().map(this::toDolarDto).toList());
+            dolarCollection.setDolarCollectionFromDolarApi(dolarList);
+            if (dolarCollection.getDolarList().isEmpty()) {
+                dolarList = dolarService.getDolarValues();
+                dolarList.forEach(dolar -> dolarService.saveDolar(toDolarEntity(dolar)));
+                dolarCollection.setDolarCollectionFromDolarApi(dolarList);
+            }
+            dolarCollection.sortDolarListByName();
+            return dolarCollection.getDolarList();
+        } catch (SSLConfigurationException e) {
+            e.printStackTrace();
+            throw e;
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw e;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error general al obtener los datos del dólar", e);
         }
-        dolarCollection.sortDolarListByName();
-        return dolarCollection.getDolarList();
     }
 
     /**
      * Convierte un objeto IclEntity a un objeto IclDto.
+     * 
      * @param entity el objeto IclEntity a convertir
      * @return el objeto IclDto con los datos de la entidad
      */
@@ -122,5 +141,21 @@ public class DataService {
         dto.setSale(entity.getSale());
         dto.setLastUpdated(entity.getLastUpdated());
         return dto;
+    }
+
+    private IclEntity toIclEntity(Icl dto) {
+        IclEntity entity = new IclEntity();
+        entity.setDate(dto.getDate());
+        entity.setValue(dto.getValue());
+        return entity;
+    }
+
+    private DolarEntity toDolarEntity(Dolar dto) {
+        DolarEntity entity = new DolarEntity();
+        entity.setName(dto.getName());
+        entity.setPurchase(dto.getPurchase());
+        entity.setSale(dto.getSale());
+        entity.setLastUpdated(dto.getLastUpdated());
+        return entity;
     }
 }

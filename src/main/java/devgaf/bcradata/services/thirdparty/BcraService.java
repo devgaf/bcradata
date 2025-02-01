@@ -48,9 +48,31 @@ public class BcraService {
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final IclRepository iclRepository;
 
+    /**
+     * Constructor de la clase BcraService.
+     * 
+     * @param restTemplate    RestTemplate para realizar las solicitudes HTTP.
+     * @param iclRepository Repositorio de la entidad IclEntity.
+     */
     public BcraService(RestTemplate restTemplate, IclRepository iclRepository) {
         this.restTemplate = restTemplate;
         this.iclRepository = iclRepository;
+    }
+
+
+    /**
+     * Guarda un nuevo IclEntity en la base de datos si no existe, 
+     * o actualiza su valor si ya existe.
+     * @param iclEntity el IclEntity a guardar
+     */
+    public void saveIcl(IclEntity iclEntity) {
+        IclEntity existingIcl = iclRepository.findByDate(iclEntity.getDate());
+        if (existingIcl != null && Double.compare(existingIcl.getValue(), iclEntity.getValue()) != 0) {
+            existingIcl.setValue(iclEntity.getValue());
+            iclRepository.save(existingIcl);
+        } else if (existingIcl == null) {
+            iclRepository.save(iclEntity);
+        }
     }
 
     /**
@@ -161,6 +183,11 @@ public class BcraService {
         }
     }
 
+    /**
+     * Convierte un objeto Icl a una entidad IclEntity.
+     * @param icl el objeto Icl a convertir
+     * @return una entidad IclEntity con los datos del objeto Icl
+     */
     private IclEntity toEntity(Icl icl) {
         IclEntity entity = new IclEntity();
         entity.setDate(icl.getDate());

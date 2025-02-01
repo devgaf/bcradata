@@ -18,6 +18,7 @@ import lombok.NoArgsConstructor;
  * para generar un constructor sin argumentos(@NoArgsConstructor) 
  * y otro con todos los argumentos(@AllArgsConstructor)
  * 
+ * Entidad para representar los valores del dólar en la base de datos.
  */
 @NoArgsConstructor
 @AllArgsConstructor

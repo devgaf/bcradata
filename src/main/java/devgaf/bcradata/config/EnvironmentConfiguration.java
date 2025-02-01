@@ -11,6 +11,7 @@ import lombok.Getter;
  * se utiliza @Getter de lombok para generar los getters de las variables de
  * entorno
  * 
+ * Configuración del entorno de la aplicación.
  */
 @Configuration
 @PropertySource("file:.env")

@@ -14,11 +14,22 @@ import lombok.NoArgsConstructor;
  * y otro con todos los argumentos(@AllArgsConstructor)
  * 
  */
+
+/**
+ * DTO para representar los valores del ICL.
+ */
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 public class Icl {
+    /**
+     * Nombre del ICL.
+     */
     public static final String NAME = "Índice para Contratos de Locación";
+
+    /**
+     * Variable ID del ICL.
+     */
     public static final String ID_VARIABLE = "40";
     private double value;
     private LocalDate date;

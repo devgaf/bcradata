@@ -1,5 +1,7 @@
 package devgaf.bcradata.repositories;
 
+import java.time.LocalDate;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -12,4 +14,11 @@ import devgaf.bcradata.models.DolarEntity;
  */
 @Repository
 public interface DolarRepository extends JpaRepository<DolarEntity, Long> {
+    /**
+     * Encuentra un DolarEntity por la fecha de última actualización.
+     *
+     * @param lastUpdated la fecha de última actualización
+     * @return el DolarEntity encontrado
+     */
+    DolarEntity findByLastUpdated(LocalDate lastUpdated);
 }
