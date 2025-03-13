@@ -1,12 +1,37 @@
 <configuration>
+    
+    <!-- Define una variable con la fecha/hora actual -->
+    <timestamp key="currentDate" datePattern="yyyy-MM-dd_HH-mm" />
+
+    <!-- Appender para ARCHIVO -->
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>logs_economic_data/economic_data.log</file>
+
+        <!-- Política de rotación basada en tiempo -->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>logs_economic_data/economic_data_%d{yyyy-MM-dd}.log</fileNamePattern>
-            <maxHistory>30</maxHistory>
+            <!-- Patrón para los archivos rotados (solo fecha) -->
+            <fileNamePattern>logs/ngrok-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!-- Número máximo de archivos a conservar -->
+            <maxHistory>30</maxHistory> <!-- 30 días -->
         </rollingPolicy>
+
+        <!-- Codificador y formato -->
         <encoder>
             <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
+        <immediateFlush>true</immediateFlush>
     </appender>
+
+    <!-- Appender para CONSOLA -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+        <immediateFlush>true</immediateFlush>
+    </appender>
+
+    <!-- Root logger -->
+    <root level="DEBUG">
+        <appender-ref ref="FILE" />
+        <appender-ref ref="CONSOLE" />
+    </root>
 </configuration>
