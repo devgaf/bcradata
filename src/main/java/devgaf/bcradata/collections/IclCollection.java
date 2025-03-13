@@ -2,6 +2,7 @@ package devgaf.bcradata.collections;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import devgaf.bcradata.dtos.Icl;
@@ -29,7 +30,9 @@ public class IclCollection {
      * Ordena la lista iclList por la fecha de los Icl. Los mas antiguos primero.
      */
     public void sortIclListByDate() {
-        iclList.sort((Icl icl1, Icl icl2) -> icl1.getDate().compareTo(icl2.getDate()));
+        List<Icl> mutableList = new ArrayList<>(iclList); // Copiar a una lista mutable
+        Collections.sort(mutableList, (icl1, icl2) -> icl1.getDate().compareTo(icl2.getDate()));
+        iclList = mutableList;
     }
 
     /**
