@@ -1,4 +1,4 @@
-package devgaf.ngrok.services.thirdparty;
+package devgaf.bcradata.services.thirdparty;
 
 import java.io.IOException;
 import java.util.List;
@@ -11,12 +11,12 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import lombok.extern.slf4j.Slf4j;
 
-import devgaf.ngrok.dtos.Icl;
-import devgaf.ngrok.exceptions.BcraServiceException;
-import devgaf.ngrok.exceptions.NoContentException;
-import devgaf.ngrok.exceptions.SSLConfigurationException;
-import devgaf.ngrok.repositories.IclRepository;
-import devgaf.ngrok.models.IclEntity;
+import devgaf.bcradata.dtos.Icl;
+import devgaf.bcradata.exceptions.BcraServiceException;
+import devgaf.bcradata.exceptions.NoContentException;
+import devgaf.bcradata.exceptions.SSLConfigurationException;
+import devgaf.bcradata.repositories.IclRepository;
+import devgaf.bcradata.models.IclEntity;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.JsonNode;

@@ -1,4 +1,4 @@
-package devgaf.ngrok;
+package devgaf.bcradata;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

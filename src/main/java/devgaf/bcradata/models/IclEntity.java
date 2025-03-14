@@ -1,4 +1,4 @@
-package devgaf.ngrok.models;
+package devgaf.bcradata.models;
 
 import java.time.LocalDate;
 

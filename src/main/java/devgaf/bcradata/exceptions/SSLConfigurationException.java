@@ -1,4 +1,4 @@
-package devgaf.ngrok.exceptions;
+package devgaf.bcradata.exceptions;
 
 public class SSLConfigurationException extends RuntimeException {
 	private static final long serialVersionUID = 1L;

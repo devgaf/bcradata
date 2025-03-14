@@ -1,11 +1,11 @@
-package devgaf.ngrok.repositories;
+package devgaf.bcradata.repositories;
 
 import java.time.LocalDate;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import devgaf.ngrok.models.DolarEntity;
+import devgaf.bcradata.models.DolarEntity;
 
 /**
  * Repositorio de la entidad DolarEntity.

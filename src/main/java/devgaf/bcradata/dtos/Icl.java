@@ -1,4 +1,4 @@
-package devgaf.ngrok.dtos;
+package devgaf.bcradata.dtos;
 
 import java.time.LocalDate;
 

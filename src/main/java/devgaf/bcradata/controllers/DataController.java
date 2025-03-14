@@ -1,14 +1,14 @@
-package devgaf.ngrok.controllers;
+package devgaf.bcradata.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import devgaf.ngrok.services.DataService;
-import devgaf.ngrok.utils.Messages;
+import devgaf.bcradata.services.DataService;
+import devgaf.bcradata.utils.Messages;
 import jakarta.annotation.PostConstruct;
-import devgaf.ngrok.exceptions.SSLConfigurationException;
-import devgaf.ngrok.dtos.Dolar;
-import devgaf.ngrok.dtos.Icl;
-import devgaf.ngrok.exceptions.NoContentException;
+import devgaf.bcradata.exceptions.SSLConfigurationException;
+import devgaf.bcradata.dtos.Dolar;
+import devgaf.bcradata.dtos.Icl;
+import devgaf.bcradata.exceptions.NoContentException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

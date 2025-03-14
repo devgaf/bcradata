@@ -1,4 +1,4 @@
-package devgaf.ngrok.exceptions;
+package devgaf.bcradata.exceptions;
 
 import java.sql.SQLException;
 

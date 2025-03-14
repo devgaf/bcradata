@@ -1,4 +1,4 @@
-package devgaf.ngrok.services;
+package devgaf.bcradata.services;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -6,18 +6,18 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import devgaf.ngrok.services.thirdparty.BcraService;
-import devgaf.ngrok.services.thirdparty.DolarService;
-import devgaf.ngrok.collections.DolarCollection;
-import devgaf.ngrok.collections.IclCollection;
-import devgaf.ngrok.dtos.Dolar;
-import devgaf.ngrok.dtos.Icl;
-import devgaf.ngrok.models.DolarEntity;
-import devgaf.ngrok.models.IclEntity;
-import devgaf.ngrok.exceptions.NoContentException;
-import devgaf.ngrok.exceptions.SSLConfigurationException;
-import devgaf.ngrok.repositories.IclRepository;
-import devgaf.ngrok.repositories.DolarRepository;
+import devgaf.bcradata.services.thirdparty.BcraService;
+import devgaf.bcradata.services.thirdparty.DolarService;
+import devgaf.bcradata.collections.DolarCollection;
+import devgaf.bcradata.collections.IclCollection;
+import devgaf.bcradata.dtos.Dolar;
+import devgaf.bcradata.dtos.Icl;
+import devgaf.bcradata.models.DolarEntity;
+import devgaf.bcradata.models.IclEntity;
+import devgaf.bcradata.exceptions.NoContentException;
+import devgaf.bcradata.exceptions.SSLConfigurationException;
+import devgaf.bcradata.repositories.IclRepository;
+import devgaf.bcradata.repositories.DolarRepository;
 import lombok.RequiredArgsConstructor;
 
 /**

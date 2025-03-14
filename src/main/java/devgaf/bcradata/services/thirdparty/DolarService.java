@@ -1,4 +1,4 @@
-package devgaf.ngrok.services.thirdparty;
+package devgaf.bcradata.services.thirdparty;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -14,10 +14,10 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.type.TypeReference;
 
-import devgaf.ngrok.dtos.Dolar;
-import devgaf.ngrok.models.DolarEntity;
-import devgaf.ngrok.exceptions.SSLConfigurationException;
-import devgaf.ngrok.repositories.DolarRepository;
+import devgaf.bcradata.dtos.Dolar;
+import devgaf.bcradata.models.DolarEntity;
+import devgaf.bcradata.exceptions.SSLConfigurationException;
+import devgaf.bcradata.repositories.DolarRepository;
 import lombok.extern.slf4j.Slf4j;
 
 /**

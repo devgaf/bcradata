@@ -1,11 +1,11 @@
-package devgaf.ngrok.collections;
+package devgaf.bcradata.collections;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import devgaf.ngrok.dtos.Icl;
+import devgaf.bcradata.dtos.Icl;
 import lombok.RequiredArgsConstructor;
 
 /**
