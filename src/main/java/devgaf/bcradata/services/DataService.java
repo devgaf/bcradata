@@ -89,29 +89,25 @@ public class DataService {
      * 
      * @return lista de Dolar con los valores de los dolares Oficial, Blue, Bolsa,
      *         CCL, Mayorista, Cripto y Tarjeta/Turista
-     * @throws SSLConfigurationException si hay un error en la configuracion SSL
-     * @throws IOException               si hay un error parseando la respuesta JSON
-     */
-    public List<Dolar> getResponseDolar() throws SSLConfigurationException, IOException {
+          * @throws Exception 
+          */
+         public List<Dolar> getResponseDolar() throws Exception {
         try {
             List<Dolar> dolarList = new ArrayList<>(dolarRepository.findAll().stream().map(this::toDolarDto).toList());
             dolarCollection.setDolarCollectionFromDolarApi(dolarList);
             if (dolarCollection.getDolarList().isEmpty()) {
                 dolarList = dolarService.getDolarValues();
+                if (dolarList.isEmpty()) {
+                    throw new NoContentException("No content available");
+                }
                 dolarList.forEach(dolar -> dolarService.saveDolar(toDolarEntity(dolar)));
                 dolarCollection.setDolarCollectionFromDolarApi(dolarList);
             }
             dolarCollection.sortDolarListByName();
             return dolarCollection.getDolarList();
-        } catch (SSLConfigurationException e) {
-            e.printStackTrace();
-            throw e;
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw e;
         } catch (Exception e) {
             e.printStackTrace();
-            throw new RuntimeException("Error general al obtener los datos del dólar", e);
+            throw e;
         }
     }
 
@@ -124,7 +120,7 @@ public class DataService {
     private Icl toIclDto(IclEntity entity) {
         Icl dto = new Icl();
         dto.setDate(entity.getDate());
-        dto.setValue(entity.getValue());
+        dto.setMeasurement(entity.getMeasurement());
         return dto;
     }
 
@@ -146,7 +142,7 @@ public class DataService {
     private IclEntity toIclEntity(Icl dto) {
         IclEntity entity = new IclEntity();
         entity.setDate(dto.getDate());
-        entity.setValue(dto.getValue());
+        entity.setMeasurement(dto.getMeasurement());
         return entity;
     }
 

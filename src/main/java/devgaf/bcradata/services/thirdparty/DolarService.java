@@ -4,10 +4,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -21,14 +18,15 @@ import devgaf.bcradata.dtos.Dolar;
 import devgaf.bcradata.models.DolarEntity;
 import devgaf.bcradata.exceptions.SSLConfigurationException;
 import devgaf.bcradata.repositories.DolarRepository;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Servicio que se encarga de obtener los valores del dólar de la API de
  * DolarSi.
  */
+@Slf4j
 @Service
 public class DolarService {
-    private static final Logger logger = LoggerFactory.getLogger(DolarService.class);
 
     @Value("${urlDolarapi}")
     private String urlDolarapi;
@@ -92,9 +90,9 @@ public class DolarService {
                 LocalDateTime dateTime = LocalDateTime.parse(node.get("fechaActualizacion").asText(), formatter);
                 dolar.setLastUpdated(dateTime.toLocalDate());
                 return dolar;
-            }).collect(Collectors.toList());
+            }).toList();
         } catch (IOException e) {
-            logger.error("Error deserializing response: {}", e.toString());
+            log.error("Error deserializing response: {}", e.toString());
             throw new IOException("Error deserializing response from dollarSerializer", e);
         }
     }
@@ -123,28 +121,28 @@ public class DolarService {
      * @throws IOException               si hay un error parseando la respuesta JSON
      * @throws Exception                 si hay un error general
      */
-    public List<Dolar> getDolarValues() throws IOException, SSLConfigurationException, Exception {
+    public List<Dolar> getDolarValues() throws SSLConfigurationException, Exception {
         String url = UriComponentsBuilder.fromUriString(urlDolarapi)
                 .toUriString();
         try {
             String responseUrl = restTemplate.getForObject(url, String.class);
             if (responseUrl != null) {
                 List<Dolar> dolarList = dollarSerializer(responseUrl);
-                dolarRepository.saveAll(dolarList.stream().map(this::toEntity).collect(Collectors.toList()));
+                dolarRepository.saveAll(dolarList.stream().map(this::toEntity).toList());
                 return dolarList;
             } else {
                 throw new IOException("Response body is null");
             }
         } catch (SSLConfigurationException sslEx) {
-            logger.error("SSL Configuration Error: {}", sslEx.toString());
+            log.error("SSL Configuration Error: {}", sslEx.toString());
             sslEx.printStackTrace();
             throw sslEx;
         } catch (IOException ioEx) {
-            logger.error("IOException Error: {}", ioEx.toString());
+            log.error("IOException Error: {}", ioEx.toString());
             ioEx.printStackTrace();
             throw ioEx;
         } catch (Exception ex) {
-            logger.error("Error fetching data from DolarApi: {}", ex.toString());
+            log.error("Error fetching data from DolarApi: {}", ex.toString());
             ex.printStackTrace();
             throw ex;
         }

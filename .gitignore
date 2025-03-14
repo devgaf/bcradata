@@ -3,7 +3,9 @@
 
 # Log file
 *.log
-/src/main/resources/logs_economic_data/
+
+# Exclude logs directory inside resources
+/src/main/resources/logs_ngrok/
 
 # BlueJ files
 *.ctxt
@@ -61,3 +63,5 @@ target/
 !**/src/test/**/target/
 *.old
 .env.local
+*.tmp
+/.apt_generated_tests/

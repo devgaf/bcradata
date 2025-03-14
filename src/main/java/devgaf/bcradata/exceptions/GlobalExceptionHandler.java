@@ -21,8 +21,6 @@ import lombok.extern.slf4j.Slf4j;
  * Manejador global de excepciones.
  */
 public class GlobalExceptionHandler {
-
-	
 	/**
 	 * Manejo global de la excepción NoContentException
 	 * 

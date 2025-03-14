@@ -1,7 +1,9 @@
 package devgaf.bcradata.exceptions;
 
 public class SSLConfigurationException extends RuntimeException {
-    public SSLConfigurationException() {
+	private static final long serialVersionUID = 1L;
+
+	public SSLConfigurationException() {
         super("SSL Configuration Error");
     }
 

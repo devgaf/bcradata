@@ -31,6 +31,6 @@ public class Icl {
      * Variable ID del ICL.
      */
     public static final String ID_VARIABLE = "40";
-    private double value;
+    private double measurement;
     private LocalDate date;
 }

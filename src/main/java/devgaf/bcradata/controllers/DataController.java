@@ -3,11 +3,14 @@ package devgaf.bcradata.controllers;
 import org.springframework.web.bind.annotation.RestController;
 
 import devgaf.bcradata.services.DataService;
+import devgaf.bcradata.utils.Messages;
+import jakarta.annotation.PostConstruct;
 import devgaf.bcradata.exceptions.SSLConfigurationException;
 import devgaf.bcradata.dtos.Dolar;
 import devgaf.bcradata.dtos.Icl;
 import devgaf.bcradata.exceptions.NoContentException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,20 +24,27 @@ import java.util.List;
 import java.util.Map;
 import java.io.IOException;
 
-
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 /**
  * Controlador de la API REST
  * 
  * @version 1.0
  */
 public class DataController {
+    
     private final DataService dataService;
     private final HttpHeaders headers = new HttpHeaders();
+    private final Messages messages;
 
-    {
-        headers.add("Content-Type", "application/json; charset=UTF-8");
+    /**
+     * Metodo que se ejecuta despues de que se haya construido el objeto,
+     * se encarga de agregar el tipo de contenido a la respuesta
+     */
+    @PostConstruct
+    public void init() {
+        headers.add(Messages.CONTENT_TYPE, Messages.APPLICATION_JSON);
     }
 
     /**
@@ -45,9 +55,9 @@ public class DataController {
      */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleException(Exception e) {
-        e.printStackTrace();
-        headers.add("error", "Error general: " + e.toString());
-        return new ResponseEntity<>("Error general: " + e.getMessage(), headers, HttpStatus.INTERNAL_SERVER_ERROR);
+        log.error(messages.getMessage(Messages.ERROR_INTERNAL, e.toString()), e);
+        headers.add(Messages.ERROR_HEADER, e.getMessage());
+        return new ResponseEntity<>(messages.getMessage(Messages.ERROR_INTERNAL, e.toString()), headers, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     /**
@@ -68,28 +78,24 @@ public class DataController {
             List<Icl> data = dataService.getResponseBcraIclFromDate(dateIni, dateEnd);
             return new ResponseEntity<>(data, headers, HttpStatus.OK);
         } catch (SSLConfigurationException e) {
-            e.printStackTrace();
-            headers.add("error", "SSL Configuration Error " + e.getMessage());
-            return new ResponseEntity<>(null, headers, HttpStatus.INTERNAL_SERVER_ERROR);
+            log.error(messages.getMessage(Messages.ERROR_SSL, e.getMessage()), e);
+            headers.add(Messages.ERROR_HEADER, e.getMessage());
+            return new ResponseEntity<>(List.of(), headers, HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (NoContentException e) {
-            e.printStackTrace();
-            headers.add("error", "No content available: " + e.getMessage());
-            return new ResponseEntity<>(null, headers,
-                    HttpStatus.NO_CONTENT);
+            log.warn(messages.getMessage(Messages.ERROR_NO_CONTENT, e.getMessage()), e);
+            headers.add(Messages.ERROR_HEADER, e.getMessage());
+            return new ResponseEntity<>(List.of(), headers, HttpStatus.NO_CONTENT);
         } catch (IOException e) {
-            e.printStackTrace();
-            headers.add("error", "IO Error: " + e.getMessage());
-            return new ResponseEntity<>(null, headers,
-                    HttpStatus.INTERNAL_SERVER_ERROR);
+            log.error(messages.getMessage(Messages.ERROR_IO, e.getMessage()), e);
+            headers.add(Messages.ERROR_HEADER, e.getMessage());
+            return new ResponseEntity<>(List.of(), headers, HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (Exception e) {
-            e.printStackTrace();
-            headers.add("error", "Error general: " + e.toString());
-            return new ResponseEntity<>(null, headers,
-                    HttpStatus.INTERNAL_SERVER_ERROR);
+            log.error(messages.getMessage(Messages.ERROR_INTERNAL, e.toString()), e);
+            headers.add(Messages.ERROR_HEADER, e.getMessage());
+            return new ResponseEntity<>(List.of(), headers, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    
     /**
      * Consulta el BCRA y devuelve una lista del ICL historico
      * 
@@ -104,24 +110,21 @@ public class DataController {
             List<Icl> data = dataService.getResponseBcraIcl();
             return new ResponseEntity<>(data, headers, HttpStatus.OK);
         } catch (SSLConfigurationException e) {
-            e.printStackTrace();
-            headers.add("error", "SSL Configuration Error " + e.getMessage());
-            return new ResponseEntity<>(null, headers, HttpStatus.INTERNAL_SERVER_ERROR);
+            log.error(messages.getMessage(Messages.ERROR_SSL, e.getMessage()), e);
+            headers.add(Messages.ERROR_HEADER, e.getMessage());
+            return new ResponseEntity<>(List.of(), headers, HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (NoContentException e) {
-            e.printStackTrace();
-            headers.add("error", "No content available: " + e.getMessage());
-            return new ResponseEntity<>(null, headers,
-                    HttpStatus.NO_CONTENT);
+            log.warn(messages.getMessage(Messages.ERROR_NO_CONTENT, e.getMessage()), e);
+            headers.add(Messages.ERROR_HEADER, e.getMessage());
+            return new ResponseEntity<>(List.of(), headers, HttpStatus.NO_CONTENT);
         } catch (IOException e) {
-            e.printStackTrace();
-            headers.add("error", "IO Error: " + e.getMessage());
-            return new ResponseEntity<>(null, headers,
-                    HttpStatus.INTERNAL_SERVER_ERROR);
+            log.error(messages.getMessage(Messages.ERROR_IO, e.getMessage()), e);
+            headers.add(Messages.ERROR_HEADER, e.getMessage());
+            return new ResponseEntity<>(List.of(), headers, HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (Exception e) {
-            e.printStackTrace();
-            headers.add("error", "Error general: " + e.toString());
-            return new ResponseEntity<>(null, headers,
-                    HttpStatus.INTERNAL_SERVER_ERROR);
+            log.error(messages.getMessage(Messages.ERROR_INTERNAL, e.toString()), e);
+            headers.add(Messages.ERROR_HEADER, e.getMessage());
+            return new ResponseEntity<>(List.of(), headers, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     
@@ -138,17 +141,21 @@ public class DataController {
             List<Dolar> data = dataService.getResponseDolar();
             return new ResponseEntity<>(data, headers, HttpStatus.OK);
         } catch (SSLConfigurationException e) {
-            e.printStackTrace();
-            headers.add("error", "SSL Configuration Error " + e.getMessage());
-            return new ResponseEntity<>(null, headers, HttpStatus.INTERNAL_SERVER_ERROR);
+            log.error(messages.getMessage(Messages.ERROR_SSL, e.getMessage()), e);
+            headers.add(Messages.ERROR_HEADER, e.getMessage());
+            return new ResponseEntity<>(List.of(), headers, HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (NoContentException e) {
+            log.warn(messages.getMessage(Messages.ERROR_NO_CONTENT, e.getMessage()), e);
+            headers.add(Messages.ERROR_HEADER, e.getMessage());
+            return new ResponseEntity<>(List.of(), headers, HttpStatus.NO_CONTENT);
         } catch (IOException e) {
-            e.printStackTrace();
-            headers.add("error", "IO Error: " + e.getMessage());
-            return new ResponseEntity<>(null, headers, HttpStatus.INTERNAL_SERVER_ERROR);
+            log.error(messages.getMessage(Messages.ERROR_IO, e.getMessage()), e);
+            headers.add(Messages.ERROR_HEADER, e.getMessage());
+            return new ResponseEntity<>(List.of(), headers, HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (Exception e) {
-            e.printStackTrace();
-            headers.add("error", "Error general: " + e.toString());
-            return new ResponseEntity<>(null, headers, HttpStatus.INTERNAL_SERVER_ERROR);
+            log.error(messages.getMessage(Messages.ERROR_INTERNAL, e.toString()), e);
+            headers.add(Messages.ERROR_HEADER, e.getMessage());
+            return new ResponseEntity<>(List.of(), headers, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
