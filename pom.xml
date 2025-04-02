@@ -10,9 +10,9 @@
 		<!-- lookup parent from repository -->
 	</parent>
 	<groupId>devgaf</groupId>
-	<artifactId>ngrok</artifactId>
+	<artifactId>bcradata</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>ngrok</name>
+	<name>bcradata</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>
 	<licenses>
@@ -80,10 +80,18 @@
 			<artifactId>dotenv-java</artifactId>
 			<version>3.0.2</version>
 		</dependency>
-		<dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
+		<!-- <dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 			<scope>runtime</scope>
+		</dependency> -->
+
+		<!-- https://mvnrepository.com/artifact/com.mysql/mysql-connector-j -->
+		<dependency>
+			<groupId>com.mysql</groupId>
+			<artifactId>mysql-connector-j</artifactId>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webmvc-ui -->
@@ -154,8 +162,8 @@
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<version>3.10.1</version>
 				<configuration> -->
-					<!-- Genera el Javadoc en una carpeta temporal -->
-				<!-- 	<outputDirectory>${project.build.directory}/javadoc-temp</outputDirectory>
+			<!-- Genera el Javadoc en una carpeta temporal -->
+			<!-- 	<outputDirectory>${project.build.directory}/javadoc-temp</outputDirectory>
 				</configuration>
 				<executions>
 					<execution>
@@ -180,12 +188,12 @@
 						</goals>
 						<configuration>
 							<target> -->
-								<!-- Mueve los archivos de javadoc-temp/apidocs a src/main/resources/documentation -->
-								<!-- <move todir="${project.basedir}/src/main/resources/documentation">
+			<!-- Mueve los archivos de javadoc-temp/apidocs a src/main/resources/documentation -->
+			<!-- <move todir="${project.basedir}/src/main/resources/documentation">
 									<fileset dir="${project.build.directory}/javadoc-temp/apidocs"/>
 								</move> -->
-								<!-- Elimina la carpeta temporal -->
-								<!-- <delete dir="${project.build.directory}/javadoc-temp"/>
+			<!-- Elimina la carpeta temporal -->
+			<!-- <delete dir="${project.build.directory}/javadoc-temp"/>
 							</target>
 						</configuration>
 					</execution>

@@ -5,7 +5,7 @@
 *.log
 
 # Exclude logs directory inside resources
-/src/main/resources/logs_ngrok/
+/src/main/resources/logs*/
 
 # BlueJ files
 *.ctxt
@@ -65,3 +65,6 @@ target/
 .env.local
 *.tmp
 /.apt_generated_tests/
+.factorypath
+.fuse_hidden*
+/bd/

@@ -14,6 +14,8 @@ services:
       MYSQL_PASSWORD: ${SPRING_DATASOURCE_PASSWORD_MYSQL}
     ports:
       - "3306:3306"
+    volumes:
+      - ./bd/mysql:/var/lib/mysql
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 10s
