@@ -67,4 +67,5 @@ target/
 /.apt_generated_tests/
 .factorypath
 .fuse_hidden*
-/bd/
+/bd/*
+/logs/*
