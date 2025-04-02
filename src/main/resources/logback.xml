@@ -9,7 +9,7 @@
         <!-- Política de rotación basada en tiempo -->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- Patrón para los archivos rotados (solo fecha) -->
-            <fileNamePattern>logs/ngrok-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>logs/bcradata-%d{yyyy-MM-dd}.log</fileNamePattern>
             <!-- Número máximo de archivos a conservar -->
             <maxHistory>30</maxHistory> <!-- 30 días -->
         </rollingPolicy>
