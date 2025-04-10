@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.4.3</version>
+		<version>3.4.4</version>
 		<relativePath/>
 		<!-- lookup parent from repository -->
 	</parent>
@@ -155,51 +155,6 @@
 					</excludes>
 				</configuration>
 			</plugin>
-			<!-- descomentar para generar javadoc -->
-			<!--
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>3.10.1</version>
-				<configuration> -->
-			<!-- Genera el Javadoc en una carpeta temporal -->
-			<!-- 	<outputDirectory>${project.build.directory}/javadoc-temp</outputDirectory>
-				</configuration>
-				<executions>
-					<execution>
-						<id>generate-javadoc</id>
-						<phase>prepare-package</phase>
-						<goals>
-							<goal>javadoc</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-antrun-plugin</artifactId>
-				<version>3.1.0</version>
-				<executions>
-					<execution>
-						<id>move-javadoc</id>
-						<phase>prepare-package</phase>
-						<goals>
-							<goal>run</goal>
-						</goals>
-						<configuration>
-							<target> -->
-			<!-- Mueve los archivos de javadoc-temp/apidocs a src/main/resources/documentation -->
-			<!-- <move todir="${project.basedir}/src/main/resources/documentation">
-									<fileset dir="${project.build.directory}/javadoc-temp/apidocs"/>
-								</move> -->
-			<!-- Elimina la carpeta temporal -->
-			<!-- <delete dir="${project.build.directory}/javadoc-temp"/>
-							</target>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin> -->
-
 		</plugins>
 	</build>
 </project>
