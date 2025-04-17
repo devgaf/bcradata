@@ -39,21 +39,18 @@ public class EnvironmentConfiguration {
     @Value("${bcraVersion}")
     private String bcraVersion;
 
+    @Value("${bcraIclPath}")
+	private String bcraIclPath;
+
+	@Value("${bcraLimitZero}")
+	private String bcraLimitZero;
     /*
      * Se inyecta la variable de entorno bcraPathBase
      * que contiene el path base de la api de bcra
      */
     @Value("${bcraPathBase}")
     private String bcraPathBase;
-
-    /*
-     * Se inyecta la variable de entorno urlBcraFullRecords
-     * que contiene la url de la api de bcra para obtener todos los registros
-     * del ICL
-     */
-    @Value("${urlBcraFullRecords}")
-    private String urlBcraFullRecords;
-
+    
     /*
      * Se inyecta la variable de entorno urlDolarapi
      * que contiene la url de la api de dolar

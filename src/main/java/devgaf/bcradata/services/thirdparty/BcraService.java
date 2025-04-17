@@ -40,8 +40,13 @@ public class BcraService {
 	@Value("${bcraPathBase}")
 	private String bcraPathBase;
 
-	@Value("${urlBcraFullRecords}")
-	private String urlBcraFullRecords;
+	@Value("${bcraIclPath}")
+	private String bcraIclPath;
+
+	@Value("${bcraLimitZero}")
+	private String bcraLimitZero;
+
+	private String urlBcraIclFullRecords = urlBcraPrincipalesVariables + bcraIclPath + bcraLimitZero;
 
 	private final RestTemplate restTemplate;
 	private final ObjectMapper objectMapper = new ObjectMapper();
@@ -152,7 +157,9 @@ public class BcraService {
 	 * @throws IOException               si hay un error parseando la respuesta JSON
 	 */
 	public List<Icl> getResponseBcraIcl() throws SSLConfigurationException, IOException {
-		String url = UriComponentsBuilder.fromUriString(urlBcraFullRecords).queryParam("limit", "0").toUriString();
+		String url = UriComponentsBuilder.fromUriString(urlBcraIclFullRecords)
+					.queryParam("limit", "0")
+					.toUriString();
 		try {
 			String response = restTemplate.getForObject(url, String.class);
 			if (response != null) {
@@ -190,7 +197,7 @@ public class BcraService {
 	 */
 	public List<Icl> getResponseBcraIclFromDate(String dateIni, String dateEnd)
 			throws SSLConfigurationException, IOException {
-		String url = UriComponentsBuilder.fromUriString(urlBcraFullRecords)
+		String url = UriComponentsBuilder.fromUriString(urlBcraIclFullRecords)
 				.queryParam("limit", "0")
 				.queryParam("desde", dateIni)
 				.queryParam("hasta", dateEnd)
